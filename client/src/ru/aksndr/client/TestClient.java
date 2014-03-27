@@ -9,7 +9,7 @@ public class TestClient {
   public static void main(String[] argv) {
       ru.aksndr.server.Greetings service = new ru.aksndr.server.Hello();
       //invoke business method
-      String resp = service.sayHello("FU!");
+      String resp = service.sayHello("Sanya");
       System.out.print(resp);
   }
 }
