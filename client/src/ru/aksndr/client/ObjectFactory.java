@@ -26,12 +26,30 @@ public class ObjectFactory {
 
     private final static QName _SayHello_QNAME = new QName("http://server.aksndr.ru/", "sayHello");
     private final static QName _SayHelloResponse_QNAME = new QName("http://server.aksndr.ru/", "sayHelloResponse");
+    private final static QName _GetCourse_QNAME = new QName("http://server.aksndr.ru/", "getCourse");
+    private final static QName _GetCourseResponse_QNAME = new QName("http://server.aksndr.ru/", "getCourseResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ru.aksndr.client
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link GetCourse }
+     * 
+     */
+    public GetCourse createGetCourse() {
+        return new GetCourse();
+    }
+
+    /**
+     * Create an instance of {@link GetCourseResponse }
+     * 
+     */
+    public GetCourseResponse createGetCourseResponse() {
+        return new GetCourseResponse();
     }
 
     /**
@@ -66,6 +84,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://server.aksndr.ru/", name = "sayHelloResponse")
     public JAXBElement<SayHelloResponse> createSayHelloResponse(SayHelloResponse value) {
         return new JAXBElement<SayHelloResponse>(_SayHelloResponse_QNAME, SayHelloResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCourse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server.aksndr.ru/", name = "getCourse")
+    public JAXBElement<GetCourse> createGetCourse(GetCourse value) {
+        return new JAXBElement<GetCourse>(_GetCourse_QNAME, GetCourse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCourseResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server.aksndr.ru/", name = "getCourseResponse")
+    public JAXBElement<GetCourseResponse> createGetCourseResponse(GetCourseResponse value) {
+        return new JAXBElement<GetCourseResponse>(_GetCourseResponse_QNAME, GetCourseResponse.class, null, value);
     }
 
 }

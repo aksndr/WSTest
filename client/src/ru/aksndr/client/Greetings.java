@@ -25,6 +25,17 @@ public interface Greetings {
 
     /**
      * 
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getCourse", targetNamespace = "http://server.aksndr.ru/", className = "ru.aksndr.client.GetCourse")
+    @ResponseWrapper(localName = "getCourseResponse", targetNamespace = "http://server.aksndr.ru/", className = "ru.aksndr.client.GetCourseResponse")
+    public String getCourse();
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns java.lang.String

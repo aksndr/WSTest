@@ -7,4 +7,7 @@ import javax.jws.WebService;
 public interface Greetings {
     @WebMethod
     String sayHello(String name);
+
+    @WebMethod
+    String getCourse();
 }
