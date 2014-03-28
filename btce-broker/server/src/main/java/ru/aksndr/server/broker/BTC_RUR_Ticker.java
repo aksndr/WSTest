@@ -15,7 +15,7 @@ public class BTC_RUR_Ticker implements Runnable {
         course = HttpUtils.httpGet(url);
         setCourse(course);
 
-//        System.out.println(++lap);
+        System.out.println(++lap + " " +course);
     }
 
     public String getCourse() {
