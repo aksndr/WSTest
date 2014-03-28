@@ -38,7 +38,7 @@ public class HttpUtils {
     /**
      * A trust manager, that doesn't check SSL certs.
      */
-    private static TrustManager [] _trustAllCerts = null;
+    private static TrustManager[] _trustAllCerts = null;
 
 
     // Constructors
@@ -50,24 +50,22 @@ public class HttpUtils {
      * Perform a HTTP get request.
      *
      * @param url The url to query.
-     *
      * @return The reply as a string, or null if an error occured.
      */
-    public synchronized static String httpGet( String url) {
+    public synchronized static String httpGet(String url) {
 
         // Execute HTTP GET request with no further header lines.
-        return httpGet( url, null);
+        return httpGet(url, null);
     }
 
     /**
      * Perform a HTTP get request.
      *
-     * @param url The url to query.
+     * @param url         The url to query.
      * @param headerlines Optional header lines for the request.
-     *
      * @return The reply as a string, or null if an error occured.
      */
-    public synchronized static String httpGet( String url, Map< String, String> headerlines) {
+    public synchronized static String httpGet(String url, Map<String, String> headerlines) {
         URL requestURL;
         HttpURLConnection connection;
         String agent = "Mozilla/4.0";  // Bitstamp seems to require this as an example.
@@ -76,13 +74,13 @@ public class HttpUtils {
         StringBuffer result = new StringBuffer();
 
         // Check, if we should trust all SSL certs and enable the fix if necessary.
-        if( TRUST_ALL_SSL_CERTS && ( _trustAllCerts == null)) {
+        if (TRUST_ALL_SSL_CERTS && (_trustAllCerts == null)) {
             installAllCertsTruster();
         }
 
         try {
-            requestURL = new URL( url);
-        } catch( MalformedURLException me) {
+            requestURL = new URL(url);
+        } catch (MalformedURLException me) {
 
 //            LogUtils.getInstance().getLogger().error( "URL format error: " + url);
 
@@ -90,45 +88,45 @@ public class HttpUtils {
         }
 
         try {
-            connection = (HttpURLConnection)requestURL.openConnection();
-        } catch( IOException ioe) {
+            connection = (HttpURLConnection) requestURL.openConnection();
+        } catch (IOException ioe) {
 
 //            LogUtils.getInstance().getLogger().error( "Cannot open URL: " + url);
 
             return null;
         }
 
-        connection.setRequestProperty( "User-Agent", agent );
+        connection.setRequestProperty("User-Agent", agent);
 
         // Add the additional headerlines, if there were any given.
-        if( headerlines != null) {
-            for( Map.Entry<String, String> entry : headerlines.entrySet()) {
-                connection.setRequestProperty( entry.getKey(), entry.getValue());
+        if (headerlines != null) {
+            for (Map.Entry<String, String> entry : headerlines.entrySet()) {
+                connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
         }
 
         try {
             connection.setRequestMethod("GET");
 
-            reader = new BufferedReader( new InputStreamReader( connection.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-            while( ( currentLine = reader.readLine()) != null) {
-                result.append( currentLine);
+            while ((currentLine = reader.readLine()) != null) {
+                result.append(currentLine);
             }
             reader.close();
 
-        } catch( ProtocolException pe) {
+        } catch (ProtocolException pe) {
 
 //            LogUtils.getInstance().getLogger().error( "Wrong protocol for URL: " + pe.toString());
 
             result = null;  // return null
 
-        } catch( IOException ioe) {
+        } catch (IOException ioe) {
 
 //            LogUtils.getInstance().getLogger().error( "I/O error while reading from URL: " + url + "\n" + ioe.toString());
 
 	  /*
-	  Scanner scanner = new Scanner( connection.getErrorStream());  // Get a stream for the error message.
+      Scanner scanner = new Scanner( connection.getErrorStream());  // Get a stream for the error message.
 
 	  scanner.useDelimiter("\\Z");
 
@@ -140,7 +138,7 @@ public class HttpUtils {
 
         } finally {
 
-            if( connection != null) {
+            if (connection != null) {
                 connection.disconnect();
             }
         }
@@ -152,13 +150,12 @@ public class HttpUtils {
     /**
      * Send a HTTP Post request with some post data and return the response as a string.
      *
-     * @param url The post to post the data to.
+     * @param url         The post to post the data to.
      * @param headerlines Additional lines for the HTTP Post header or null, if no lines should be added.
-     * @param postData The data to send to the server.
-     *
+     * @param postData    The data to send to the server.
      * @return The response as a string or null, of the request failed.
      */
-    public synchronized static String httpPost( String url, Map<String, String> headerlines, String postData) {
+    public synchronized static String httpPost(String url, Map<String, String> headerlines, String postData) {
         URL requestURL;
         HttpURLConnection connection;
         String agent = "Mozilla/4.0";
@@ -168,13 +165,13 @@ public class HttpUtils {
         StringBuffer result = new StringBuffer();
 
         // Check, if we should trust all SSL certs and enable the fix if necessary.
-        if( TRUST_ALL_SSL_CERTS && ( _trustAllCerts == null)) {
+        if (TRUST_ALL_SSL_CERTS && (_trustAllCerts == null)) {
             installAllCertsTruster();
         }
 
         try {
-            encodedData = URLEncoder.encode( postData, "UTF-8" );
-        } catch( UnsupportedEncodingException uee) {
+            encodedData = URLEncoder.encode(postData, "UTF-8");
+        } catch (UnsupportedEncodingException uee) {
 
 //            LogUtils.getInstance().getLogger().error( "Cannot encode post data as UTF-8: " + uee.toString());
 
@@ -182,8 +179,8 @@ public class HttpUtils {
         }
 
         try {
-            requestURL = new URL( url);
-        } catch( MalformedURLException me) {
+            requestURL = new URL(url);
+        } catch (MalformedURLException me) {
 
 //            LogUtils.getInstance().getLogger().error( "URL format error: " + url);
 
@@ -191,8 +188,8 @@ public class HttpUtils {
         }
 
         try {
-            connection = (HttpURLConnection)requestURL.openConnection();
-        } catch( IOException ioe) {
+            connection = (HttpURLConnection) requestURL.openConnection();
+        } catch (IOException ioe) {
 
 //            LogUtils.getInstance().getLogger().error( "Cannot open URL: " + url);
 
@@ -200,71 +197,71 @@ public class HttpUtils {
         }
 
         try {
-            connection.setRequestMethod( "POST" );
-            connection.setRequestProperty( "User-Agent", agent );
-            connection.setRequestProperty( "Content-Type", type );
-            connection.setRequestProperty( "Content-Length", "" + encodedData.length());
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("User-Agent", agent);
+            connection.setRequestProperty("Content-Type", type);
+            connection.setRequestProperty("Content-Length", "" + encodedData.length());
 
             // Add the additional headerlines, if there were any given.
-            if( headerlines != null) {
-                for( Map.Entry<String, String> entry : headerlines.entrySet()) {
-                    connection.setRequestProperty( entry.getKey(), entry.getValue());
+            if (headerlines != null) {
+                for (Map.Entry<String, String> entry : headerlines.entrySet()) {
+                    connection.setRequestProperty(entry.getKey(), entry.getValue());
                 }
             }
 
-            connection.setUseCaches( false);
-            connection.setDoInput( true);
-            connection.setDoOutput( true);
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
 
             OutputStream os = connection.getOutputStream();
-            os.write( postData.getBytes( "UTF-8") );
+            os.write(postData.getBytes("UTF-8"));
             os.flush();
             os.close();
-        } catch( ProtocolException pe) {
+        } catch (ProtocolException pe) {
 
 //            LogUtils.getInstance().getLogger().error( "Cannot set protocol to HTTP POST: " + pe.toString());
 
             result = null;
 
-        } catch( IOException ioe) {
+        } catch (IOException ioe) {
 
 //            LogUtils.getInstance().getLogger().error( "Cannot write HTTP post data to output stream: " + ioe.toString());
 
             result = null;
 
         } finally {
-            if( connection != null) {
+            if (connection != null) {
                 connection.disconnect();
             }
         }
 
-        if( result == null) {  // Check for errors so far...
+        if (result == null) {  // Check for errors so far...
             return null;     // An error occured...
         }
 
         try {
             int rc = connection.getResponseCode();
 
-            if( rc == 200) {
+            if (rc == 200) {
 
                 //Get Response
                 InputStream is = connection.getInputStream();
-                BufferedReader reader = new BufferedReader( new InputStreamReader(is));
-                while((currentLine = reader.readLine()) != null) {
-                    result.append( currentLine);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                while ((currentLine = reader.readLine()) != null) {
+                    result.append(currentLine);
                 }
                 reader.close();
             } else {
                 result = null;  // Posting resulted in an error.
             }
-        } catch( IOException ioe) {
+        } catch (IOException ioe) {
 
 //            LogUtils.getInstance().getLogger().error( "Cannot read HTTP POST response: " + ioe.toString());
 
             result = null;
 
         } finally {
-            if(connection != null) {
+            if (connection != null) {
                 connection.disconnect();
             }
         }
@@ -279,47 +276,49 @@ public class HttpUtils {
      */
     private static void installAllCertsTruster() {
 
-        _trustAllCerts = new TrustManager [] {
+        _trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                         return null;
                     }
 
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {  }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    }
 
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {  }
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
 
                 }
         };
 
 
         try {
-            SSLContext sc = SSLContext.getInstance( "SSL");
-            sc.init ( null, _trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory( sc.getSocketFactory());
-        } catch( KeyManagementException kme) {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, _trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (KeyManagementException kme) {
 
 //            LogUtils.getInstance().getLogger().error( "Can't get key in SSL fix installer: " + kme.toString());
 
-            System.exit( 1);
+            System.exit(1);
 
-        } catch( NoSuchAlgorithmException nsae) {
+        } catch (NoSuchAlgorithmException nsae) {
 
 //            LogUtils.getInstance().getLogger().error( "Can't get algorithm in SSL fix installer: " + nsae.toString());
 
-            System.exit( 1);
+            System.exit(1);
 
         }
 
         // Create all-trusting host name verifier
         _allHostsValid = new HostnameVerifier() {
-            public boolean verify( String hostname, SSLSession session) {
+            public boolean verify(String hostname, SSLSession session) {
                 return true;
             }
         };
 
         // Install the all-trusting host verifier
-        HttpsURLConnection.setDefaultHostnameVerifier( _allHostsValid);
+        HttpsURLConnection.setDefaultHostnameVerifier(_allHostsValid);
     }
 }
 

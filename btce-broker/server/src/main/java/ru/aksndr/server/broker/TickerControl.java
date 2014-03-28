@@ -7,12 +7,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+
 public class TickerControl {
 
     private static TickerControl instance;
 
     public static TickerControl getInstance() {
-        if (instance==null)
+        if (instance == null)
             instance = new TickerControl();
         return instance;
     }
@@ -29,11 +30,13 @@ public class TickerControl {
         final ScheduledFuture<?> tickerHandle = scheduler.scheduleAtFixedRate(ticker, 0, 15, SECONDS);
 
         scheduler.schedule(new Runnable() {
-            public void run() { tickerHandle.cancel(true); }
+            public void run() {
+                tickerHandle.cancel(true);
+            }
         }, 60 * 60, SECONDS);
     }
 
-    public String getCourse(){
+    public String getCourse() {
         return ticker.getCourse();
     }
 

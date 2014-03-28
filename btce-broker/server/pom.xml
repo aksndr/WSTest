@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <groupId>btc-e-broker</groupId>
+    <version>1.0-SNAPSHOT</version>
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+    <artifactId>server</artifactId>
+
+    <!--<dependencies>-->
+    <!--<dependency>-->
+    <!--<groupId>javax.servlet</groupId>-->
+    <!--<artifactId>servlet-api</artifactId>-->
+    <!--<version>2.5</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+    <!--<groupId>log4j</groupId>-->
+    <!--<artifactId>log4j</artifactId>-->
+    <!--<version>1.2.17</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+    <!--<groupId>com.sun.xml</groupId>-->
+    <!--<artifactId>jaxws-rt</artifactId>-->
+    <!--<version>2.0EA3</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+    <!--<groupId>javax.jws</groupId>-->
+    <!--<artifactId>jsr181-api</artifactId>-->
+    <!--<version>1.0-MR1</version>-->
+    <!--</dependency>-->
+    <!--</dependencies>-->
+
+    <build>
+        <finalName>btce</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
