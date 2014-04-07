@@ -14,7 +14,7 @@ public class SocketServerChanel {
         try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()) {
             serverSocketChannel.socket().bind(new InetSocketAddress(4444));
             serverSocketChannel.configureBlocking(false);
-            System.out.println("Waiting for connections");
+            System.out.println("Waiting for connectiosns");
 
             while (true) {
 
